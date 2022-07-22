@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { useAddContactMutation } from '../../services/contactsAPI';
+import { toast } from 'react-toastify';
+
+import { useSelector, useDispatch } from 'react-redux';
+import contactsOperations from '../../redux/phonebook-operations';
+import { getContacts } from '../../redux/phonebook-selectors';
 
 import s from './ContactForm.module.css';
 
-export default function ContactsForm({ contacts }) {
+export default function ContactsForm() {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-
-  const [addContact] = useAddContactMutation();
+  const [number, setNumber] = useState('');
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -18,7 +22,7 @@ export default function ContactsForm({ contacts }) {
         break;
 
       case 'number':
-        setPhone(value);
+        setNumber(value);
         break;
 
       default:
@@ -31,10 +35,11 @@ export default function ContactsForm({ contacts }) {
     const similarContact = contacts.find(contact => contact.name === name);
 
     if (similarContact) {
-      return alert(`${similarContact.name} is already in contact`);
-    } else addContact({ name, phone });
+      return toast.error(`${similarContact.name} is already in your list`);
+    } else dispatch(contactsOperations.addContact(name, number));
+
     setName('');
-    setPhone('');
+    setNumber('');
   };
 
   return (
@@ -58,7 +63,7 @@ export default function ContactsForm({ contacts }) {
           className={s.input}
           type="tel"
           name="number"
-          value={phone}
+          value={number}
           onChange={handleChange}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
