@@ -1,6 +1,6 @@
 // import { useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
-// import contactsOperations from '../redux/phonebook-operations';
+import { useDispatch } from 'react-redux';
+import contactsOperations from '../redux/phonebook-operations';
 
 import ContactsForm from '../components/ContactForm';
 import Filter from '../components/Filter';
@@ -10,9 +10,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import s from './ContactsPage.module.css';
 
 export default function ContactsPage() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => dispatch(contactsOperations.fetchContacts()), [dispatch]);
+  dispatch(contactsOperations.fetchContacts());
 
   return (
     <main>
