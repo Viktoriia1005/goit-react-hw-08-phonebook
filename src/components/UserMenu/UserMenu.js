@@ -11,7 +11,7 @@ export default function UserMenu() {
     <div className={s.container}>
       <img
         className={s.avatar}
-        src="https://st2.depositphotos.com/2945617/8802/v/450/depositphotos_88028046-stock-illustration-funny-pig-playing-in-the.jpg"
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/800px-User_icon_2.svg.png"
         title="User avatar"
         alt="Avatar"
         width={32}
